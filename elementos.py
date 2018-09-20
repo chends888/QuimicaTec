@@ -268,7 +268,7 @@ else:
     if counter == 2:
         print('A capacidade de carga:', str('%.3f' % abs(cap[0])).replace('.',','), 'Ah')
     else:
-        print('Será necessário associar', str(counter), 'do conjunto', str(batOption)+',', 'sendo a capacidade de carga resultante:', str('%.3f' % abs((cap[0])*counter)).replace('.',','), 'Ah')
+        print('Será necessário associar no mínimo', str(counter), 'do conjunto', str(batOption)+' em paralelo,', 'sendo a capacidade de carga resultante:', str('%.3f' % abs((cap[0])*counter)).replace('.',','), 'Ah')
 
 
 
