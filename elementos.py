@@ -1,16 +1,19 @@
 # -*- coding: utf-8 -*-
 
-# Referências Bibliográficas:
+''' Referências Bibliográficas:
 
-    # Tabela de potenciais padrão: 
-    # http://www.dqi.iq.ufrj.br/tabela_de_potenciais.pdf
+    Tabela de potenciais padrão: 
+    http://www.dqi.iq.ufrj.br/tabela_de_potenciais.pdf
+'''
 
 
 import time
 import numpy as np
 
 elementDict = {
-    #Metal : (número de elétrons, potencial de redução)
+    '''
+    Metal : (número de elétrons, potencial de redução)
+    '''
     'Li'        : (1, -3.05, 6,94),
     'K'         : (1, -2.93, 39.09),
     'Ba'        : (2, -2.90, 137,33),
@@ -60,7 +63,12 @@ elementDict = {
     # 'f2' : (2, 2.87),
 }
 solutionDict = {
-    #Solução : (número de elétrons, [lista de metais insolúveis])
+    '''
+    Solução : (número de elétrons, [lista de metais])
+
+    Lista de metais acima representam os metais solúveis quando a lista não está vazia,
+    quando está vazia, todos os metais que o programa considera são solúveis.
+    '''
     'MnO4'   : (1, []),
     'NO2'    : (1, []),
     'NO3'    : (1, []),
@@ -77,7 +85,9 @@ solutionDict = {
 }
 
 def calcElet(element1Name, element2Name):
-    #Calculando número de elétrons da reação global para usos futuros
+    '''
+    Calculando número de elétrons da reação global para usos futuros.
+    '''
     nElet = elementDict[element2Name][0]*elementDict[element1Name][0]
     if nElet == 6:
         return 3
@@ -195,8 +205,6 @@ Sim[s] ou Não[n]''')
         else:
             print('Capacidade de carga é:', str(('%.3f' % abs(batCap[1]))).replace('.',','), 'Ah. E o elemento limitante é o', element2Name)
 
-
-
 else:
     print('\nDigite a tensão da sua aplicação (Ex: 1.2):')
     voltage = float(input())
@@ -224,7 +232,7 @@ else:
         coef = 2
         assocDict = {}
         counter = 1
-        while True: #(voltage*0.9 > abs(redPot) and abs(redPot) > voltage*1.1 and redPot not in voltages)
+        while True: '''(voltage*0.9 > abs(redPot) and abs(redPot) > voltage*1.1 and redPot not in voltages)'''
             for key in elementDict:
                 for key2 in elementDict:
                     if elementDict[key][1] == elementDict[key2][1]:
@@ -245,8 +253,6 @@ else:
                         voltages.append(redPot)
                         counter += 1
             coef += 1
-            # print(voltages)
-            # print('Loop')
             if (not voltages):
                continue
             else:
@@ -259,7 +265,6 @@ else:
     lifespan = float(input())
 
     voltage = calcVolt(assocDict[batOption][1], assocDict[batOption][2])
-    # print(assocDict[batOption][0])
     curr = float(pot)/assocDict[batOption][0]
     nElet = calcElet(assocDict[batOption][1], assocDict[batOption][2])
     cap = calcCap(1, 1, nElet)
