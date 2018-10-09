@@ -5,6 +5,7 @@
     # Tabela de potenciais padrão: 
     # http://www.dqi.iq.ufrj.br/tabela_de_potenciais.pdf
 
+
 import time
 import numpy as np
 
@@ -59,7 +60,7 @@ elementDict = {
     # 'f2' : (2, 2.87),
 }
 solutionDict = {
-    #Metal : (número de elétrons, potencial de redução)
+    #Solução : (número de elétrons, [lista de metais insolúveis])
     'MnO4'   : (1, []),
     'NO2'    : (1, []),
     'NO3'    : (1, []),
@@ -136,7 +137,7 @@ Sim[s] ou Não[n]''')
         print('Qual a temperatura de operação das pilhas (em K)?')
         temp = float(input())
 
-        print('Constante de equilíbrio:', str(coef).replace('.',','))
+        print('\n\nConstante de equilíbrio:', str(coef).replace('.',','))
 
         nElet = calcElet(element1Name, element2Name)
         nernst = abs(redPot) - ((8.315*temp)/(nElet*96485)* np.log(coef))
@@ -148,16 +149,28 @@ Sim[s] ou Não[n]''')
 
     if sol == 's':
         print('\nSelecione a solução do', element1Name,'entre as opções abaixo:')
-        for key in solutionDict:
-            if element1Name not in solutionDict[key][1]:
-                print(key)
-        sol1 = input()
+        if (element1Name == 'K' or element1Name == 'Ag' or element1Name == 'Pb' or element1Name == 'Mn' or element1Name == 'Ca' or element1Name == 'Sr' or element1Name == 'Ba'):
+            for key in solutionDict:
+                if element1Name in solutionDict[key][1]:
+                    print(key)
+            sol1 = input()
+        else:
+            for key in solutionDict:
+                if element1Name not in solutionDict[key][1]:
+                    print(key)
+            sol1 = input()
 
         print('\nSelecione a solução do', element2Name,'entre as opções abaixo:')
-        for key in solutionDict:
-            if element2Name not in solutionDict[key][1]:
-                print(key)
-        sol2 = input()
+        if (element2Name == 'K' or element2Name == 'Ag' or element2Name == 'Pb' or element2Name == 'Mn' or element2Name == 'Ca' or element2Name == 'Sr' or element2Name == 'Ba'):
+            for key in solutionDict:
+                if element2Name in solutionDict[key][1]:
+                    print(key)
+            sol1 = input()
+        else:
+            for key in solutionDict:
+                if element2Name not in solutionDict[key][1]:
+                    print(key)
+            sol1 = input()
 
         print('\n\nFórmula da solução do', element1Name,':', element1Name+str(solutionDict[sol1][0])+'('+sol1+')'+str(elementDict[element1Name][0]))
         print('Fórmula da solução do', element2Name,':', element2Name+str(solutionDict[sol2][0])+'('+sol2+')'+str(elementDict[element2Name][0]))
@@ -269,30 +282,3 @@ else:
         print('A capacidade de carga:', str('%.3f' % abs(cap[0])).replace('.',','), 'Ah')
     else:
         print('Será necessário associar no mínimo', str(counter), 'do conjunto', str(batOption)+' em paralelo,', 'sendo a capacidade de carga resultante:', str('%.3f' % abs((cap[0])*counter)).replace('.',','), 'Ah')
-
-
-
-
-
-    # print('\nDigite a capacidade da sua aplicação (em Ah, ex: 23.8):')
-    # cap = float(input())
-
-    # print('\nCom uma tolarência de 10%, você tem as seguintes opções:')
-    # coef = 1
-    # while True:
-    #     capacities = []
-    #     for key in elementDict:
-    #         for key2 in elementDict:
-    #             batCap = ((calcElet(key, key2) * 96485) / 3600) * coef
-    #             print(key, key2)
-    #             print(batCap)
-    #             print(coef)
-    #             time.sleep(0.05)
-    #             if (cap*0.9 < abs(batCap) and abs(batCap) < cap*1.1):
-    #                 print(('%.2f' % abs(batCap), 'Ah, utilizando pilhas de:', key, '+', key2))
-    #                 time.sleep(0.35)
-    #     coef += 1
-    #     if (not capacities):
-    #         continue
-    #     else:
-    #         break
